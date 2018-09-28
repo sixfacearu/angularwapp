@@ -1,7 +1,0 @@
-export enum LoginStatus{
-    LOGIN_NOT_INITIATED,
-    LOGIN_IN_PROGRESS,
-    LOGIN_FAILURE,
-    LOGIN_CANCELLED,
-    LOGIN_SUCCESSFUL
-}
