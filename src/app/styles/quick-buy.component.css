@@ -1,0 +1,205 @@
+/* quick buy */
+
+.dmy {
+    display: block;
+    text-align: center;
+    border-radius: 1px;
+    width: 230px;
+    border-right: 0;
+}
+
+.dmy button {
+    font-family: Helvetica-Light, Arial, sans-serif;
+    font-size: 15px;
+    color: #27C359;
+    margin: 0 -3px;
+    background: none;
+    border: 1px solid #27C359;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+.dmy button:hover {
+    background: #27C359;
+    color: #fff;
+}
+
+.box-container .heading p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+.dmy button:focus {
+    outline: none;
+}
+
+.box {
+    border: 1px solid #e2e2e2;
+    width: 23%;
+    margin: 35px 0px 0px;
+    display: inline-block;
+    height: 250px;
+    cursor: pointer;
+    transition: height .25s;
+    *display: inline;
+    zoom: 1;
+    outline: none;
+    vertical-align: top;
+}
+
+.box:hover {
+    border: 1px solid #27C359;
+    height: 260px;
+}
+
+.box:hover .topcontent {
+    border-bottom: 1px solid #27C359 !important;
+}
+
+.topcontent {
+    padding: 10px;
+    border-bottom: 1px solid #e2e2e2;
+    transition: width .25s;
+    display: block;
+}
+
+.middleGraph {
+    padding: 10px;
+    height: 90px;
+    display: block;
+}
+.chartContainer {
+    height: 92px; 
+    width: calc(100% - 20px)
+}
+
+.middleData {
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    margin: 0px 0px 15px;
+    transition: width .25s;
+    position: relative;
+    display: block;
+}
+
+.middleData .accountName {
+    top: 38px !important;
+}
+
+.box:hover .middleData {
+    border-top: 1px solid #27C359 !important;
+    border-bottom: 1px solid #27C359 !important;
+}
+
+.middleData p {
+    display: inline-block;
+    margin: 0;
+    border-left: 1px solid #e2e2e2;
+    padding: 10px;
+    transition: width .25s;
+}
+
+.box:hover .middleData .accountName p {
+    border: 0 !important;
+}
+
+.box:hover .middleData p {
+    border-left: 1px solid #27C359 !important;
+}
+
+.box:hover .middleData .bordlft {
+    border-left: 0 !important;
+}
+
+.bordlft {
+    border-left: 0 !important;
+    transition: width .25s;
+    width: 110px;
+}
+
+.topcontent p {
+    margin: 0;
+}
+
+.topcontent .leftcontn {
+    display: inline-block;
+}
+
+.topcontent .rightcontn {
+    display: inline-block;
+    float: right;
+}
+
+.bdr-rght {
+    border-right: 0 !important;
+}
+
+.topBox {
+    height: 280px;
+}
+
+.bottomBox {
+    height: 280px;
+}
+
+.buyBtn {
+    text-align: center;
+    display: block;
+}
+
+.buyBtn button {
+    background: #4CAF50;
+    border: 0;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 4px;
+}
+
+.buyBtn input {
+    width: 80px;
+    border: 1px solid #4caf50;
+    padding: 4px;
+}
+
+.displayOnHover {
+    display: inline-block;
+}
+
+
+/* 
+.hoverBox {
+    background-color: #e8e8e8;
+    height: 220px;
+    padding: 20px 20px;
+    display: none;
+}
+
+.hoverBox p {
+    margin: 0
+}
+
+.hoverBox a {
+    float: right;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.box:hover .hoverBox {
+    display: block;
+}
+
+.box:hover .topcontent {
+    display: none;
+}
+
+.box:hover .middleGraph {
+    display: none;
+}
+
+.box:hover .middleData {
+    display: none;
+}
+
+.box:hover .buyBtn {
+    display: none;
+} */

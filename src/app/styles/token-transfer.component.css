@@ -1,0 +1,96 @@
+.tokentransfer-page {
+    width: 84%;
+    display: inline-block;
+    position: relative;
+    left: 16%;
+    background: #faf8f8;
+}
+
+.tokentransfer-container {
+    background-color: #faf8f8;
+    padding: 20px 60px 45px;
+    border-left: 1px solid #e8e8e8;
+}
+.tokentransfer-form-container {
+    display: block;
+    margin: auto;
+    margin-top: 40px;
+    background: white;
+    padding: 25px 40px;
+    border-radius: 8px;
+    width : 45%;
+    box-shadow: 0px 0px 4px 1px #bdbdbd;
+}
+.form-group label {
+    font-size: 16px;
+    font-family: helvetica-bold;
+    color: #546172;
+}
+.form-input {
+    margin-bottom: 25px;
+}
+input.form-control {
+    height: 45px;
+    margin-bottom: 5px;
+    background: #F7F7F7;
+    font-size: 15px;
+    color: #546172;
+}
+select.form-control {
+    height: 40px;
+    margin-bottom: 30px;
+    background: #F7F7F7;
+    font-size: 15px;
+    color: #546172;
+}
+.transbutton {
+    background-image: linear-gradient(-180deg, #382673 0%, #682382 100%);
+    border: 0;
+    color: #fff;
+    padding: 12px 33px;
+    border-radius: 8px;
+    margin-left: 30px;
+    margin: auto;
+    display: block;
+}
+
+.error {
+    display: block;
+    color: red;
+    font-size: 13px;
+}
+.error span {
+    display: block;
+}
+
+.token-balance {
+    color: black;
+    font-size: 13px;   
+}
+.token-balance span {
+    display: inline;
+}
+
+.transbutton[disabled] {
+    cursor: not-allowed;
+}
+
+/* darkTheme-tokentransfer-container */
+.darkTheme-tokentransfer-container .tokentransfer-container {
+    background: #464646;
+}
+.darkTheme-tokentransfer-container .tokentransfer-form-container{
+    box-shadow: none;
+    background: #24292f;
+}
+
+.darkTheme-tokentransfer-container .form-group label {
+    color: #d4d4d4 !important;
+}
+
+.darkTheme-tokentransfer-container .token-balance {
+    color: #d4d4d4 !important;
+}
+
+
+

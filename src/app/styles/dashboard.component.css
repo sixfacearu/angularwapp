@@ -1,0 +1,649 @@
+.dasboardPage {
+    width: 84%;
+    display: inline-block;
+    position: relative;
+    left: 16%;
+    height: 100vh;
+}
+
+.dashboard {
+    background-color: #faf8f8;
+    padding: 20px 60px 45px;
+    border-left: 1px solid #e8e8e8;
+}
+
+.graphData {
+    background: #fff;
+    padding: 20px 0px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.timeDetail {
+    padding: 0 25px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.inputValue {
+    display: inline-block;
+    width: 25%;
+}
+
+.btnTab {
+    display: inline-block;
+}
+
+.btnTab button {
+    color: #9F9F9F;
+    font-size: 16px;
+    padding: 9px 25px;
+    background: #EBEBEB;
+    border: 1px solid #dcdcdc;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 0;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.btnTab button.active {
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 25px;
+    border: none;
+    background-image: linear-gradient(-180deg, #382673 0%, #682382 100%);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 0;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.btnTab .rightBtn.active {
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 25px;
+    border: none;
+    background-image: linear-gradient(-180deg, #382673 0%, #682382 100%);
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 6px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 6px !important;
+    margin-left: -4px !important;
+    vertical-align: middle;
+}
+
+.btnTab .rightBtn {
+    color: #9F9F9F;
+    font-size: 16px;
+    padding: 9px 25px;
+    background: #EBEBEB;
+    border: 1px solid #dcdcdc;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 6px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 6px !important;
+    margin-left: -4px !important;
+    vertical-align: middle;
+}
+
+.btnTab button:focus {
+    outline: 0px none;
+}
+
+.inputValue select {
+    padding: 5px;
+    background: #F7F7F7;
+    border: 0;
+    border-radius: 5px;
+    width: 230px;
+}
+
+.inputValue select:focus {
+    outline: none;
+}
+
+.selectTime {
+    width: 28%;
+    display: inline-block;
+    text-align: right;
+}
+
+.selectTime button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    margin: 0px 15px;
+    font-size: 15px;
+    color: #546172;
+    border: 1px solid transparent;
+    height: 35px;
+    width: 35px;
+}
+
+.selectTime button.active {
+    outline: none;
+    border: 1px solid #6E2385;
+    border-radius: 50%;
+}
+
+.selectTime button:focus {
+    outline: none;
+    border: 1px solid #6E2385;
+    border-radius: 50%;
+}
+
+.priceDetail {
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.priceValue {
+    width: 33%;
+    display: inline-block;
+}
+
+.brdrleft {
+    border-left: 1px solid #eee;
+}
+
+.priceValue p {
+    font-size: 18px;
+    color: #546172;
+    margin: 0 12px;
+    font-family: helvetica-light
+}
+
+.priceValue span {
+    font-size: 12px;
+    color: #8097B7;
+}
+
+.graphStats {
+    padding: 25px;
+}
+
+.orderBookReport .order h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.tablevalues {
+    border-bottom: 1px solid #eee;
+}
+
+.tablevalues .quantity {
+    display: inline-block;
+    width: 50%;
+}
+
+.tablevalues .price {
+    display: inline-block;
+    width: 49%;
+}
+
+.tablevalues p {
+    margin: 10px
+}
+
+.heading p {
+    font-family: Helvetica-bold!important;
+    margin-bottom: 5px;
+    font-size: 15px !important;
+    color: #546172 !important;
+}
+
+.orderBookReport .sell {
+    margin-top: 30px;
+}
+
+mat-panel-title {
+    font-size: 18px;
+    color: #546172;
+}
+
+.orderBookReport {
+    width: 45%;
+    display: inline-block;
+    overflow-y: auto;
+    max-height: 350px;
+    padding: 20px;
+    box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.50);
+    margin: 10px;
+    background-color: #fff;
+    height: 350px;
+    border-radius: 5px;
+}
+
+.token {
+    display: inline-block;
+    width: 52%;
+    vertical-align: top;
+    max-height: 350px;
+    overflow-y: auto;
+    height: 350px;
+    padding: 30px;
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.tokenName {
+    display: inline-block;
+    width: 50%;
+}
+
+.tokenValue {
+    display: inline-block;
+}
+
+.token h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.tokenDetail {
+    border-bottom: 1px solid #eee;
+}
+
+p {
+    font-size: 16px;
+    color: #546172;
+    margin: 10px;
+}
+
+.noData {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.walletContentvalue {
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.50);
+    border-radius: 8px;
+    padding-bottom: 30px;
+}
+
+.walletContentvalue table tr th {
+    border-bottom: 1px solid #ddd !important;
+    padding: 20px !important;
+    border-top: 0 !important;
+    text-align: left;
+    width: 17%;
+}
+
+.walletContentvalue table tr td {
+    border-bottom: 1px solid #ddd !important;
+    padding: 20px;
+    color: #5d5353;
+    font-family: Helvetica-Light;
+    font-size: 13px;
+    text-align: left;
+    width: 17%;
+}
+
+.orderContent {
+    padding: 30px;
+}
+
+.metamask h2 {
+    font-size: 22px;
+    font-family: helvetica-bold;
+    margin: 20px;
+}
+
+.inlineData {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+/* dark theme changes */
+
+.darkThemedashboard {
+    background: #464646
+}
+
+.darkThemedashboard .graphData {
+    background: #24292f
+}
+
+.darkThemedashboard .graphData p {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .token {
+    background-color: #24292f
+}
+
+.darkThemedashboard .orderBookReport {
+    background-color: #24292f
+}
+
+.darkThemedashboard .graphData .selectTime button {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .metamask .walletData h2 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .metamask .tokenData h2 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .metamask .tokenData .walletContentvalue table tr td {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .metamask .tokenData .walletContentvalue table tr th {
+    color: #8097B7 !important;
+}
+
+.darkThemedashboard .metamask .tokenData .walletContentvalue {
+    background: #24292f;
+}
+
+.darkThemedashboard .orderbookReport h2 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .walletContentvalue {
+    background: #24292f;
+}
+
+.darkThemedashboard .walletContentvalue .orderBookReport .buy .order h3 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .walletContentvalue .orderBookReport .buy .order h3 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .heading p {
+    color: #8097B7 !important;
+}
+
+.darkThemedashboard .tablevalues p {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .orderBookReport .order h3 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .token h3 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard .metamask h2 {
+    color: #d4d4d4;
+}
+
+.darkThemedashboard p {
+    color: #d4d4d4;
+}
+
+.chartTheme {
+    display: inline-block;
+    vertical-align: text-top;
+    margin-left: 0px;
+}
+
+.chartTheme .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+}
+
+.chartTheme .switch input {
+    display: none;
+}
+
+.chartTheme .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #382673;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.chartTheme .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.chartTheme input:checked+.slider {
+    background-color: #efefef;
+}
+
+.chartTheme input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.chartTheme input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(37px);
+}
+
+
+/*------ ADDED CSS ---------*/
+
+.chartTheme .slider:after {
+    content: 'CC';
+    color: white;
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 49%;
+    left: 60%;
+    font-size: 12px;
+    font-family: Verdana, sans-serif;
+}
+
+.chartTheme input:checked+.slider:after {
+    content: 'WandX';
+    color: #382673;
+    left: 40%;
+    font-size: 9px;
+    top: 50%;
+}
+
+.usdPrice {
+    display: inline-block;
+}
+
+.ethPrice {
+    display: inline-block;
+}
+
+.walletContentvalue table tr {
+    font-size: 15px;
+}
+
+@media screen and (max-width:767px) {
+    .dasboardPage {
+        width: 100%;
+        left: 0;
+    }
+    .dashboard {
+        padding: 60px 5px 10px 5px;
+    }
+    .graphData {
+        padding: 10px 0px;
+    }
+    .inputValue select {
+        width: 365px;
+        border: 0;
+    }
+    .btnTab {
+        margin-top: 10px;
+    }
+    .btnTab button {
+        border-radius: 0px;
+    }
+    .btnTab button.active {
+        border-radius: 0px;
+    }
+    .selectTime {
+        width: 100%;
+        text-align: left;
+    }
+    .selectTime button {
+        margin: 10px;
+    }
+    .priceDetail {
+        padding: 15px;
+    }
+    .priceValue p {
+        font-size: 15px;
+    }
+    .brdrleft {
+        border-left: none;
+    }
+    .walletContentvalue table tr th {
+        padding: 10px 10px !important;
+    }
+    .walletContentvalue table tr td {
+        padding: 10px 10px !important;
+    }
+    .orderBookReport {
+        width: 97%;
+    }
+    .tablevalues .quantity {
+        width: 48%;
+    }
+    .order-table-header {
+        padding-bottom: 40px;
+    }
+    .order-col-1,
+    .order-col-2 {
+        width: 24%;
+    }
+    .order-table-header p {
+        font-size: 10px !important;
+    }
+    .token {
+        width: 100%;
+    }
+    .priceValue {
+        width: 32%;
+    }
+}
+
+@media screen and (min-width:769px) and (max-width:1024px) {
+    .timeDetail {
+        padding: 0 10px 15px;
+    }
+    .wallet-holder .headContent {
+        padding: 10px 10px;
+    }
+    .selectTime {
+        width: 30%;
+    }
+    .btnTab button.active {
+        font-size: 12px;
+        padding: 10px 20px;
+        border-radius: 0px;
+        margin-left: 82px;
+    }
+    #activeBTN {
+        margin-left: 0px;
+    }
+    .btnTab button {
+        font-size: 12px;
+        padding: 9px 20px;
+        border-radius: 0px;
+        margin-left: 82px;
+    }
+    .priceValue {
+        width: 32%;
+    }
+    .priceDetail {
+        padding: 10px;
+    }
+    .priceValue p {
+        font-size: 17px;
+    }
+    .priceDetail span {
+        font-size: 12px;
+    }
+    .walletContentvalue table tr {
+        font-size: 10px;
+    }
+    .walletContentvalue table tr th {
+        padding: 17px 15px !important;
+    }
+    .walletContentvalue table tr td {
+        padding: 17px 15px !important;
+        font-size: 10px;
+    }
+    .orderBookReport .order h3,
+    .token h3 {
+        font-size: 15px;
+    }
+    .heading p {
+        font-size: 12px !important;
+    }
+    .tablevalues p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width:991px) {
+    .btnTab button.active {
+        font-size: 12px;
+        padding: 10px 15px;
+        margin-left: 130px;
+    }
+    .btnTab button {
+        font-size: 12px;
+        padding: 10px 15px;
+        margin-left: 130px;
+    }
+    .btnTab .rightBtn.active {
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+    .btnTab .rightBtn {
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+    .selectTime {
+        width: 100%;
+    }
+    .selectTime button {
+        margin: 0px 60px;
+    }
+    .priceValue {
+        width: 32%;
+    }
+    .walletContentvalue table tr th {
+        padding: 18px !important;
+    }
+    .orderBookReport {
+        width: 100%;
+    }
+    .token {
+        width: 100%;
+    }
+}
