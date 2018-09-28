@@ -1,0 +1,22 @@
+<div class="verify-top-half dark-blue">
+
+</div>
+<div class="verify-bottom-half light-blue">
+
+</div>
+<img class="verify-wandx-logo" src="../../assets/wandxlogo.png" [style.top]="checkWeb3() ? '19%' : '4%'"/>
+<div class="login-signin-text" *ngIf="checkWeb3()">
+    <p>Verifying</p>
+</div>
+<div class="verify-holder" *ngIf="checkWeb3()">
+    <div>
+        {{statusMessage}}
+    </div>
+</div>
+<div class="metamask-error" *ngIf="!checkWeb3()">
+    <img src="../../assets/metamask.png" style="height: 140px; position: relative; top: 50px; left: 147px;" />
+    <p style="position: relative; text-align: center; font-size: 20px; font-weight: 600; margin-top: 140px;">
+        Please login to Metamask and refresh page before proceeding
+    </p>
+</div>
+<footer></footer>

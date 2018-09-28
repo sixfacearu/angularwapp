@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >   
+	<div class="form-group">
+		<input class="form-control" type="text" placeholder="Private Key" formControlName="privateKey">
+		<span class="error" *ngIf="form.get('privateKey').dirty == true && form.get('privateKey').errors && form.get('privateKey').errors.required == true">Password is required</span>
+	</div>
+	<div class="button-row">
+		<span class="error" *ngIf="form.get('privateKey').dirty == true && form.get('privateKey').errors && form.get('privateKey').errors.privateKeyInvalid == true">PrivateKey is not valid</span><br>
+		<button  mat-raised-button color="sucs" type="submit">Submit</button>
+	</div>
+</form>

@@ -1,0 +1,762 @@
+<div class="orderBook">
+  <div [ngClass]="switchThemeService.switchTheme ? 'orderBookHolder darkTheamebackgroundColor':'orderBookHolder'">
+    <!-- <div class="loader" *ngIf="!showAnalysisLoader">
+            <div class="loader">
+                <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+            </div>
+        </div> -->
+    <div class="topData">
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <div class="graphContainer">
+            <div [ngClass]="switchThemeService.switchTheme? 'graphData darkTheameBoxbackground':'graphData'">
+              <div class="timeDetail">
+                <p class="switchThemeService.switchTheme?'darkTheameHeadingTextColor':''" matTooltip="This graph shows the price changes as per the cryptocompare APIs. WandX price change graphs will be shown from Feb 26th" [matTooltipPosition]="'above'">Select the Token you want to trade (for ETH)</p>
+                <div class="inputValue">
+                  <select class="input_field" (change)="onSelect($event.target.value)" [(ngModel)]="selectedSourceTokenSymbol">
+                    <option value="{{token.symbol}}" *ngFor="let token of sourceTokens">{{token.name}} ({{token.symbol}})</option>
+                  </select>
+                </div>
+                <div class="chartTheme">
+                  <label class="switch"><input type="checkbox" id="togBtn" [(ngModel)]="changeGraphData" (click)="onToggleChange()"><div class="slider round" ></div></label>
+                </div>
+              </div>
+              <div class="priceDetail">
+                <div class="row">
+                  <div class="col-md-6 col-xs-12">
+                    <div class="priceValue">
+                      <p>{{currentPrice | number:'1.0-6'}} ETH</p>
+                      <p class="brdrleft">{{(currentPrice * usd) | number:'1.0-4'}} USD</p>
+                      <span>CURRENT PRICE (from {{graphType}})</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="selectTime">
+                      <button [ngClass]="{'active': activeBtn=='M'}" (click)="getMinData()">1m</button>
+                      <button [ngClass]="{'active': activeBtn=='H'}" (click)="getDayData()">1h</button>
+                      <button [ngClass]="{'active': activeBtn=='D'}" (click)="getHoursData()">1d</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="graphStats">
+                <charts></charts>
+              </div>
+              <div class="priceBreif">
+                <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                    <div class="priceValue">
+                      <p>{{lowPrice | number:'1.0-6'}} ETH</p>
+                      <p class="brdrleft">{{(lowPrice * usd) | number:'1.0-4'}} USD</p>
+                      <br>
+                      <span>24 HOUR HIGH</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xs-6 brdrleft">
+                    <div class="priceValue ">
+                      <p>{{highPrice | number:'1.0-6'}} ETH </p>
+                      <p class="brdrleft">{{(highPrice * usd) | number:'1.0-4'}} USD</p>
+                      <br>
+                      <span>24 HOUR LOW</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div [ngClass]="switchThemeService.switchTheme? 'buyCoin darkTheameBoxbackground':'buyCoin'">
+            <div class="heading">
+              <h3>Sell {{selectedSourceTokenSymbol}}</h3>
+              <div class="dataListing">
+                <div class="row marg">
+                  <div class="col-md-6 col-xs-6">
+                    <p>Qty</p>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                    <p>Price</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dataListing" *ngIf="!buyOrders.length || buyOrders.length === 0">
+              <p>No Sell Orders</p>
+            </div>
+            <div class="dataListing " *ngFor="let order of buyOrders" (click)="showSellModal(order)" style="cursor: pointer;">
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <p>{{order.BuyingVolume}}</p>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <p>{{(order.BuyingVolume * order.TargetVolume) | number:'1.1-4'}} {{order.TargetToken.symbol}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div [ngClass]="switchThemeService.switchTheme? 'buyCoin darkTheameBoxbackground':'buyCoin'">
+            <div class="heading">
+              <h3>Buy {{selectedSourceTokenSymbol}}</h3>
+              <div class="dataListing">
+                <div class="row marg">
+                  <div class="col-md-6 col-xs-6">
+                    <p>Qty</p>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                    <p>Price</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dataListing" *ngIf="!sellOrders.length || sellOrders.length === 0">
+              <p>No Buy Orders</p>
+            </div>
+            <div class="dataListing " *ngFor="let order of sellOrders" (click)="showBuyModal(order)" style="cursor: pointer;">
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <p>{{order.SellingVolume}}</p>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <p>{{(order.SellingVolume * order.TargetVolume) | number:'1.1-4'}} {{order.TargetToken.symbol}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="bottomData">
+
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <div class="tabData">
+            <div [ngClass]="switchThemeService.switchTheme ?'table-holder darkThemetable-holder':'table-holder' ">
+              <div class="tabs">
+                <button class="tablinks" (click)="setTab('buy')" [ngClass]="{'active': selectedTab === 'buy'}">
+                  <a style="cursor: pointer;" >Buy {{selectedPlatformToken.symbol}}</a>
+                </button>
+                <button class="tablinks marleft" (click)="setTab('sell')" [ngClass]="{'active': selectedTab === 'sell'}">
+                  <a style="cursor: pointer;" >Sell {{selectedPlatformToken.symbol}}</a>
+                </button>
+                <button class="tablinks marleft" id="thirdBtn" (click)="setTab('funds')" [ngClass]="{'active': selectedTab === 'funds'}">
+                  <a style="cursor: pointer;" >Deposit / Withdraw</a>
+                </button>
+              </div>
+              <div class="tabcontent">
+                <div id="buy" class="tab tabsection" [ngClass]="{'active': selectedTab === 'buy'}">
+                  <div class="ethData">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-3">
+                        <div class="coinName">
+                          <h4>{{selectedPlatformToken.symbol}} : {{selectedTokenEscrowValue}}</h4>
+                          <p>ETH Balance: {{escrowEtherValue}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{twentyFourHrHigh | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'">24 Hour High</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{twentyFourHrLow | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'">24 Hour Low</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{lastTradedPrice | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'"> Last Traded Price (ETH)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form #buyForm="ngForm" (ngSubmit)="onSubmitBuy(buyForm)" novalidate>
+                    <div class="innerContent">
+                      <div class="val">
+                        <p>Volume</p>
+                        <input type="number" placeholder="Value" [(ngModel)]="amountToBuy" required name="buyamount" #buyamount="ngModel">
+                        <span class="error" *ngIf="buyamount.invalid && buyamount.touched">Buy amount should be greater than zero</span>
+                      </div>
+                      <div class="val">
+                        <p>Price (Ether/Token)</p>
+                        <input type="number" placeholder="Value" [(ngModel)]="priceToBuy" required name="buyprice" #buyprice="ngModel">
+                        <span class="error" *ngIf="buyprice.invalid && buyprice.touched">Buy price should be greater than zero</span>
+                      </div>
+                      <div class="enableBtn">
+                        <p matTooltip="This authorizes the Tokens to be traded from your Metamask address" [matTooltipPosition]="'above'">Turn on to use WAND to pay for the exchange fee</p>
+                        <div class="checkboxValue">
+                          <ui-switch size="small" name="uiSwitch2" [(ngModel)]="authorizeWand" (change)="onAuthorizeWandChange($event)"></ui-switch>
+                          <p>WAND</p>
+                        </div>
+                        <span>*Enabling WAND would reduce exchange fee by 75%</span>
+                      </div>
+                      <div class="gasExchangeFee">
+                        <p>Exchange Fee : {{getBuyExchangeFee() | number:'.0-8'}} </p>
+                        <div class="confirm">
+                          <input type="checkbox" [(ngModel)]="useWandxForFee" name="buy">
+                          <p> Use <span>Wand Tokens</span> to reduce the exchange fee by 75%.</p>
+                        </div>
+                      </div>
+                      <div class="total">
+                        <div class="row">
+                          <div class="col-md-3 col-xs-3">
+                            <p>Total:</p>
+                          </div>
+                          <div class="col-md-9 col-xs-9">
+                            <div class="totalamt">
+                              <p>
+                                {{getBuyTotalValue() | number : '.0-8'}} ETH
+                              </p>
+                              <span>
+                                                        {{USDValue}}
+                                                      </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class=" buybtn">
+                        <button id="myBtn">Buy {{selectedPlatformToken.symbol}}</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+                <div id="sell" class="tab tabsection" [ngClass]="{'active': selectedTab === 'sell'}">
+                  <div class="ethData">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="coinName">
+                          <h4>{{selectedPlatformToken.symbol}}</h4>
+                          <p>ETH Balance: {{escrowEtherValue}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{twentyFourHrHigh | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'">24 Hour High</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{twentyFourHrLow | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'">24 Hour Low</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 brdrleft">
+                        <div class="lastTrade">
+                          <h4>{{lastTradedPrice | number:'1.1-6'}}</h4>
+                          <p matTooltip="Powered by Cryptocompare" [matTooltipPosition]="'above'"> Last Traded Price (ETH)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form #sellForm="ngForm" (ngSubmit)="onSubmitSell(sellForm)" novalidate>
+                    <div class="innerContent">
+                      <div class="val">
+                        <p>Volume</p>
+                        <input type="number" placeholder="Value" [(ngModel)]="amountToSell" name="sellamount" #sellamount="ngModel">
+                        <span class="error" *ngIf="sellamount.invalid && sellamount.touched">Sell amount should be greater than zero</span>
+                      </div>
+                      <div class="val">
+                        <p>Price (Ether/Token)</p>
+                        <input type="number" placeholder="Value" [(ngModel)]="priceToSell" name="sellprice" #sellprice="ngModel">
+                        <span class="error" *ngIf="sellprice.invalid && sellprice.touched">Sell price should be greater than zero</span>
+                      </div>
+                      <div class="enableBtn">
+                        <p matTooltip="This authorizes the Tokens to be traded from your Metamask address" [matTooltipPosition]="'above'">Authorize the Tokens to enable creation of Sell Order</p>
+                        <div class="checkboxValue">
+                          <ui-switch [(ngModel)]="authorize" size="small" name="uiSwitch" (change)="onAuthorizeChange($event)"></ui-switch>
+                          <p>{{selectedPlatformToken.symbol}}</p>
+                        </div>
+                        <div class="checkboxValue">
+                          <ui-switch *ngIf="!(selectedSourceTokenSymbol === 'WAND')" name="uiSwitch1" size="small" [(ngModel)]="authorizeWand" (change)="onAuthorizeWandChange($event)"></ui-switch>
+                          <p *ngIf="!(selectedSourceTokenSymbol === 'WAND')">WAND</p>
+                        </div>
+                        <span>*Enabling this would result in reducing the exchange fee</span>
+                      </div>
+                      <div class="gasExchangeFee">
+                        <p>Exchange Fee : {{getBuyExchangeFee() | number:'.0-6'}} </p>
+                        <div class="confirm">
+                          <input type="checkbox" [(ngModel)]="useWandxForFee" name="exchangeWaiveOff">
+                          <p> Use <span>Wand Tokens</span> to reduce the exchange fee by 75%.</p>
+                        </div>
+                      </div>
+                      <div class="total">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <p>Total:</p>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="totalamt">
+                              <p>
+                                {{getSellTotalValue() | number : '.0-6'}} ETH
+                              </p>
+                              <span>
+                                                        {{USDValue}}
+                                                      </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="buybtn">
+                        <button id="myBtn">Sell {{selectedPlatformToken.symbol}}</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div id="funds" class="tab tabsection" [ngClass]="{'active': selectedTab === 'funds'}">
+                  <div class="funds">
+                    <div class="balances">
+                      <p>{{selectedPlatformToken.symbol}} Balance in Smart Contract : {{selectedTokenEscrowValue}}</p>
+                      <span>ETH Balance in Smart Contract : {{escrowEtherValue}} </span>
+                    </div>
+                    <div class="val">
+                      <p>Amount</p>
+                      <input type="number" placeholder="Value" [(ngModel)]="amountToDepositOrWithdraw">
+                    </div>
+                    <div class="radiobutton">
+                      <input type="radio" name="selectedToken" [(ngModel)]="selectedFund" value="ETH" [checked]="selectedFund === 'ETH'">
+                      <p>ETH</p>
+                      <input type="radio" class="marLeft" name="selectedToken" [(ngModel)]="selectedFund" [value]="selectedPlatformToken.symbol" [checked]="selectedFund === selectedPlatformToken.symbol">
+                      <p>{{selectedPlatformToken.symbol}}</p>
+                      <input *ngIf="!(selectedSourceTokenSymbol === 'WAND')" type="radio" class="marLeft" name="selectedToken" [(ngModel)]="selectedFund" value="WAND" [checked]="selectedFund === 'WAND'"><span *ngIf="!(selectedSourceTokenSymbol === 'WAND')">WAND</span>
+                    </div>
+                    <div class="enableBtn">
+                      <p matTooltip="This authorizes the Tokens to be traded from your Metamask address" [matTooltipPosition]="'above'">Authorize these Tokens to place an order</p>
+                      <div class="checkboxValue">
+                        <ui-switch [(ngModel)]="authorize" size="small" name="uiSwitch" (change)="onAuthorizeChange($event)"></ui-switch>
+                        <p>{{selectedPlatformToken.symbol}}</p>
+                      </div>
+                      <div class="checkboxValue">
+                        <ui-switch *ngIf="!(selectedSourceTokenSymbol === 'WAND')" name="uiSwitch1" size="small" [(ngModel)]="authorizeWand" (change)="onAuthorizeWandChange($event)"></ui-switch>
+                        <p *ngIf="!(selectedSourceTokenSymbol === 'WAND')">WAND</p>
+                      </div>
+                      <span>*Enabling this would result in reducing the exchange fee</span>
+                    </div>
+                    <div class="buybtn">
+                      <button [disabled]="authorize==false || authorizeWand==false" (click)="deposit()">Deposit</button>
+                      <button [disabled]="authorize==false || authorizeWand==false" (click)="withdraw()">Withdraw</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div [ngClass]="switchThemeService.switchTheme? 'buyCoin darkTheameBoxbackground':'buyCoin'">
+            <div class="heading">
+              <h3>Trade History</h3>
+              <div class="dataListing">
+                <div class="row marg">
+                  <div class="col-md-2 col-xs-2">
+                    B/S
+                  </div>
+                  <div class="col-md-5 col-xs-5">
+                    <p>Volume</p>
+                  </div>
+                  <div class="col-md-5 col-xs-5">
+                    <p>Price(ETH)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dataListing" *ngIf="!orderTransactions.length || orderTransactions.length === 0">
+              <p>No Trade History</p>
+            </div>
+            <div class="dataListing" *ngFor="let transaction of orderTransactions" style="cursor: pointer;" (click)="openTransaction(transaction.TransactionId)">
+              <div class="row" style="margin-left: 0px; margin-right: 0px;">
+                <div class="col-md-2 col-xs-2">
+                  <p style="font-size: 10px; text-align: center;">{{transaction.BuyOrderId ? "B" : "S"}}</p>
+                </div>
+                <div class="col-md-5 col-xs-5">
+                  <p>{{transaction.BuyOrder?.BuyingVolume || transaction.SellOrder?.SellingVolume}}</p>
+                </div>
+                <div class="col-md-5 col-xs-5">
+                  <p>{{
+                    (transaction.BuyOrder?.BuyingVolume || transaction.SellOrder?.SellingVolume) *
+                    (transaction.BuyOrder?.TargetVolume || transaction.SellOrder?.TargetVolume ) | number:'1.1-4'}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12" id="myOrders">
+          <div [ngClass]="switchThemeService.switchTheme? 'buyCoin darkTheameBoxbackground':'buyCoin'">
+            <div class="heading">
+              <h3>My Orders</h3>
+              <div class="myOrdersData">
+                <h4>Buy Orders</h4>
+                <div class="myorderHeading">
+                  <div class="row ">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Quantity</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Price(ETH)</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Status</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myorderscoll">
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <div class="myorderEmpty" *ngIf="!userOrders || !userOrders.BuyOrders || userOrders.BuyOrders.length === 0">
+                        <p class="noActivity">No Active Buy Orders</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myorderData" *ngFor="let order of userOrders.BuyOrders">
+                    <div class="row">
+                      <div class="col-md-4 col-xs-4">
+                        <p>{{order.BuyingVolume}}</p>
+                      </div>
+                      <div class="col-md-4 col-xs-4">
+                        <p matTooltip="{{order.BuyingVolume * order.TargetVolume * usd | number:'1.0-4'}} USD" [matTooltipPosition]="'above'">{{(order.BuyingVolume * order.TargetVolume) | number:'1.1-6'}} </p>
+                      </div>
+                      <div class="col-md-4 col-xs-4">
+                        <p *ngIf="order.Status === 'CREATED'" style="padding-top: 0px; padding-bottom: 0px; color: #FF0000; cursor: pointer;" title="Click to cancel" (click)="cancelBuyOrder(order)">x</p>
+                        <p *ngIf="order.Status !== 'CREATED'" style="padding-top: 0px; padding-bottom: 0px;">{{order.Status}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h4>Sell Orders</h4>
+                <div class="myorderHeading">
+                  <div class="row ">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Quantity</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Price(ETH)</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="myorderQuantity">
+                        <p>Status</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myorderscoll">
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <div class="myorderEmpty" *ngIf="!userOrders || !userOrders.SellOrders || userOrders.SellOrders.length === 0">
+                        <p class="noActivity">No Active Sell Orders</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myorderData" *ngFor="let order of userOrders.SellOrders">
+                    <div class="row">
+                      <div class="col-md-4 col-xs-4">
+                        <p>{{order.SellingVolume}}</p>
+                      </div>
+                      <div class="col-md-4 col-xs-4">
+                        <p matTooltip="{{order.SellingVolume * order.TargetVolume * usd | number:'1.0-4'}} USD" [matTooltipPosition]="'above'">{{(order.SellingVolume * order.TargetVolume) | number:'1.1-6'}}</p>
+                      </div>
+                      <div class="col-md-4 col-xs-4">
+                        <p *ngIf="order.Status === 'CREATED'" style="padding-top: 0px; padding-bottom: 0px; color: #FF0000; cursor: pointer;" title="Click to cancel" (click)="cancelSellOrder(order)">x</p>
+                        <p *ngIf="order.Status !== 'CREATED'" style="padding-top: 0px; padding-bottom: 0px;">{{order.Status}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="switchThemeService.switchTheme? 'advanceChart darkTheameBoxbackground':'advanceChart'">
+        <div class="timeDetailAdv">
+          <div style="display: inline-block;padding-top: 19px;">
+            <p class="advText">Advanced Graph</p>
+          </div>
+          <div class="chartBtn">
+            <button [ngClass]="{'active': tracKGraph=='line'}" (click)="changeChart('line')">Line Graph</button>
+            <button class="rightBtn" [ngClass]="{'active': tracKGraph=='candle'}" (click)="changeChart('candle')">Candle Graph</button>
+          </div>
+          <div class="selectTimeAdv">
+            <button [ngClass]="{'active': activeBtn=='M'}" (click)="getMinData()">1m</button>
+            <button [ngClass]="{'active': activeBtn=='H'}" (click)="getDayData()">1h</button>
+            <button [ngClass]="{'active': activeBtn=='D'}" (click)="getHoursData()">1d</button>
+          </div>
+        </div>
+        <div class="priceDetail">
+          <div class="priceValueAdvcChart">
+            <div class="ethPrice">
+              <p>{{currentPrice}} ETH</p>
+              <span>PRICE IN ETH</span>
+            </div>
+            <div class="usdPrice brdrleft">
+              <p>{{(currentPrice * usd) | number:'1.1-4'}} USD</p>
+              <span>PRICE IN USD</span>
+            </div>
+          </div>
+          <div class="priceValueAdvcChart brdrleft">
+            <div class="ethPrice">
+              <p>{{highPrice}} ETH</p>
+              <span>HIGH</span>
+            </div>
+            <div class="usdPrice brdrleft">
+              <p>{{(highPrice * usd) | number:'1.1-4'}} USD</p>
+              <span>HIGH</span>
+            </div>
+          </div>
+          <div class="priceValueAdvcChart brdrleft">
+            <div class="ethPrice">
+              <p>{{lowPrice}} ETH </p>
+              <span>LOW</span>
+            </div>
+            <div class="usdPrice brdrleft">
+              <p>{{(lowPrice * usd) | number:'1.1-4'}} USD</p>
+              <span>LOW</span>
+            </div>
+          </div>
+        </div>
+        <div class="advancedGraph">
+          <advchart *ngIf="tracKGraph==='line'"></advchart>
+          <dchart *ngIf="tracKGraph!='line'"></dchart>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer *ngIf="showAnalysisLoader"></footer>
+
+
+  <div id="myModal" class="summary-modal" *ngIf="isBuyModalVisible">
+    <div [ngClass]="switchThemeService.switchTheme? 'modal-content darkTheameBoxbackground':'modal-content'">
+      <div class="popupHeading">
+        <p>Buy Summary For : <span>{{selectedSellOrder.SellingToken.symbol}}</span></p>
+      </div>
+      <div class="innerdata">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="details">
+              <p>Quantity</p>
+              <p>Price for 1 {{selectedSellOrder.SellingToken.symbol}}</p>
+              <p>Total Price</p>
+              <p>Expiring Block (~ 7 Days)</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="value">
+              <p>{{selectedSellOrder.SellingVolume}}</p>
+              <p>{{selectedSellOrder.TargetVolume | number:'1.1-6'}}</p>
+              <p>{{(selectedSellOrder.TargetVolume * selectedSellOrder.SellingVolume) | number:'1.1-6'}}</p>
+              <p>{{selectedSellOrder.ExpiringBlock}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="reduceExchangeFee">
+          <div class="row">
+            <div class="col-md-12">
+              <p><input type="checkbox" [(ngModel)]="useWandxForBuyFee"> Use <span>Wand Tokens</span> to reduce the exchange fee</p>
+            </div>
+          </div>
+        </div>
+        <div class="totalamt">
+          <div class="row">
+            <div class="col-md-6">
+              <p>Total</p>
+            </div>
+            <div class="col-md-6">
+              <div class="totalValue">
+                <p>{{(selectedSellOrder.TargetVolume * selectedSellOrder.SellingVolume) | number:'1.1-6'}} {{selectedSellOrder.TargetToken.symbol}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="error">{{buyErrorMessage}}</div>
+        <div class="executeBtn">
+          <div class="row">
+            <div class="col-md-6">
+              <button (click)="buyOrder()" [disabled]="buyErrorMessage">EXECUTE</button>
+            </div>
+            <div class="col-md-6">
+              <button (click)="isBuyModalVisible = false" class="cancel">CANCEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="summary-modal" *ngIf="isSellModalVisible">
+    <div [ngClass]="switchThemeService.switchTheme? 'modal-content darkTheameBoxbackground':'modal-content'">
+      <div class="popupHeading">
+        <p>Sell Order For : <span>{{selectedBuyOrder.BuyingToken.symbol}}</span></p>
+      </div>
+      <div class="innerdata">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="details">
+              <p>Quantity</p>
+              <p>Price for 1 {{selectedBuyOrder.BuyingToken.symbol}}</p>
+              <p>Total Price</p>
+              <p>Expiring Block (~ 7 Days)</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="value">
+              <p>{{selectedBuyOrder.BuyingVolume}}</p>
+              <p>{{selectedBuyOrder.TargetVolume | number:'1.1-6'}}</p>
+              <p>{{(selectedBuyOrder.TargetVolume * selectedBuyOrder.BuyingVolume) | number:'1.1-6'}} {{selectedBuyOrder.TargetToken.symbol}}</p>
+              <p>{{selectedBuyOrder.ExpiringBlock}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="reduceExchangeFee">
+          <div class="row">
+            <div class="col-md-12">
+              <p><input type="checkbox" [(ngModel)]="useWandxForSellFee"> Use <span>Wand Tokens</span> to reduce the exchange fee</p>
+            </div>
+          </div>
+        </div>
+        <div class="totalamt">
+          <div class="row">
+            <div class="col-md-6">
+              <p>Total</p>
+            </div>
+            <div class="col-md-6">
+              <div class="totalValue">
+                <p>{{(selectedBuyOrder.TargetVolume * selectedBuyOrder.BuyingVolume) | number:'1.1-6'}} {{selectedBuyOrder.TargetToken.symbol}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="error">{{sellErrorMessage}}</div>
+        <div class="executeBtn">
+          <div class="row">
+            <div class="col-md-6">
+              <button [disabled]="sellErrorMessage" (click)="sellOrder()">EXECUTE</button>
+            </div>
+            <div class="col-md-6">
+              <button (click)="isSellModalVisible = false" class="cancel">CANCEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="summary-modal" *ngIf="isSellSummaryModalVisible">
+    <div [ngClass]="switchThemeService.switchTheme? 'modal-content darkTheameBoxbackground':'modal-content'">
+      <div class="popupHeading">
+        <p>Sell summary for: <span>{{selectedPlatformToken.symbol}}</span></p>
+      </div>
+      <div class="innerdata">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="details">
+              <p>Quantity</p>
+              <p>Exchange Fee</p>
+              <p>Price for 1 {{selectedPlatformToken.symbol}}</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="value">
+              <p>{{amountToSell}}</p>
+              <p>{{getSellExchangeFee() | number : '.0-8'}}</p>
+              <p>{{priceToSell | number:'1.1-6'}} ETH</p>
+            </div>
+          </div>
+        </div>
+        <!--<div class="reduceExchangeFee">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <p><input type="checkbox" [(ngModel)]="useWandxForFee"> Use <span>Wand Tokens</span> to reduce the exchange fee</p>
+                      </div>
+                  </div>
+              </div>-->
+        <div class="totalamt">
+          <div class="row">
+            <div class="col-md-6">
+              <p>Total Price</p>
+            </div>
+            <div class="col-md-6">
+              <div class="totalValue">
+                <p>{{getSellTotalValue() | number:'1.1-6'}} ETH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="executeBtn">
+          <div class="row">
+            <div class="col-md-6">
+              <button (click)="hideSellSummaryModal()">EXECUTE</button>
+            </div>
+            <div class="col-md-6">
+              <button (click)="isSellSummaryModalVisible = false" class="cancel">CANCEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="summary-modal" *ngIf="isBuySummaryModalVisible">
+    <div [ngClass]="switchThemeService.switchTheme? 'modal-content darkTheameBoxbackground':'modal-content'">
+      <div class="popupHeading">
+        <p>Buy summary for: <span>{{selectedPlatformToken.symbol}}</span></p>
+      </div>
+      <div class="innerdata">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="details">
+              <p>Quantity</p>
+              <p>Exchange Fee</p>
+              <p>Prices for 1 {{selectedPlatformToken.symbol}}</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="value">
+              <p>{{amountToBuy}}</p>
+              <p>{{getBuyExchangeFee() | number: '.0-8' }}</p>
+              <p>{{priceToBuy | number:'1.1-6'}} ETH</p>
+            </div>
+          </div>
+        </div>
+        <div class="totalamt">
+          <div class="row">
+            <div class="col-md-6">
+              <p>Total Price</p>
+            </div>
+            <div class="col-md-6">
+              <div class="totalValue">
+                <p>{{getBuyTotalValue() | number:'1.1-6'}} ETH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="executeBtn">
+          <div class="row">
+            <div class="col-md-6">
+              <button (click)="hideBuySummaryModal()">EXECUTE</button>
+            </div>
+            <div class="col-md-6">
+              <button (click)="isBuySummaryModalVisible = false" class="cancel">CANCEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

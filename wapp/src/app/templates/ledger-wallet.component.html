@@ -1,0 +1,22 @@
+<form [formGroup]="pathForm" (ngSubmit)="onConnect()" *ngIf="!showAddressForm">   
+	<div class="form-group">
+		<input class="form-control" type="text" placeholder="Path" formControlName="path">
+		<span class="error" *ngIf="pathForm.get('path').dirty == true && pathForm.get('path').errors && pathForm.get('path').errors.required == true">Path is required</span>
+		<span class="error" *ngIf="pathForm.get('path').dirty == true && pathForm.get('path').errors && pathForm.get('path').errors.invalid == true">Invalid Path</span>
+	</div>
+	<div class="button-row">
+		<span class="error" *ngIf="pathForm.dirty == true && pathForm.errors && pathForm.errors.walletConnection">Unable to Connect to device</span><br>
+		<button  mat-raised-button color="sucs" type="submit">Connect</button>
+	</div>
+</form>
+<form [formGroup]="addressesForm" (ngSubmit)="onSubmit()" *ngIf="showAddressForm">   
+	<div class="form-group">
+		<label *ngFor="let a of accounts" class="addresses">
+			<input class="form-control" type="radio" placeholder="Address" formControlName="selectedAddress" [value]="a">	 {{a.address}}
+		</label>
+		
+	</div>
+	<div class="button-row">
+		<button  mat-raised-button color="sucs" type="submit" class="address-btn">Use Address</button>
+	</div>
+</form>

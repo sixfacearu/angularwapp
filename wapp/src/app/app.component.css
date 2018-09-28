@@ -1,0 +1,26 @@
+.darkTheamebackgroundColor {
+    background: #464646;
+    box-shadow: none;
+}
+
+.darkTheamebackgroundColor .navigation {
+    background: #24292f;
+}
+
+.navigation {
+    width: 16%;
+    float: left;
+    position: fixed;
+    top: 0;
+    height: 100vh
+}
+
+@media screen and (max-width:767px) {
+    .navigation {
+        width: 100%;
+        float: none;
+        position: unset;
+        top: 0;
+        height: 100%
+    }
+}

@@ -1,0 +1,106 @@
+<div class="tokentransfer-page" [ngClass]="switchThemeService.switchTheme ? 'tokentransfer-page darkTheme-tokentransfer-container':'tokentransfer-page'">
+    <div class="tokentransfer-container" >
+        <div class="tokentransfer-form-container">
+            <form class="form" [formGroup]="tokenTransferForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>To Address</label>
+                    <div class="form-input">
+                        <input class="form-control" type="text" placeholder="To Address" formControlName="toAddress"/>
+                        <div class="error">
+                            <span *ngIf="tokenTransferForm.get('toAddress').touched == true && tokenTransferForm.get('toAddress').errors && tokenTransferForm.get('toAddress').errors.required == true">ToAddress is required</span>
+                            <span *ngIf="tokenTransferForm.get('toAddress').touched == true && tokenTransferForm.get('toAddress').errors && tokenTransferForm.get('toAddress').errors.invalidAddress == true">ToAddress is not a valid Address</span>
+                            <span *ngIf="tokenTransferForm.get('toAddress').touched == true && tokenTransferForm.get('toAddress').errors && tokenTransferForm.get('toAddress').errors.toSameAsFrom == true">Cannot send tokens to self</span>    
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Choose Coin To Transfer</label>
+                    <div class="form-input">
+                        <select class="form-control" formControlName="selectedToken">
+                            <option [ngValue]="-1" disabled selected>Select A Token to Send</option>
+
+                            <option [ngValue]="i" *ngFor="let token of sourceTokens; let i = index">{{token.symbol}}</option>
+                        </select>
+                        <span class="error" *ngIf="tokenTransferForm.get('selectedToken').touched == true && tokenTransferForm.get('selectedToken').errors && tokenTransferForm.get('selectedToken').errors.required == true">Token is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Amount To Send</label>
+                    <div class="form-input">
+                        <input class="form-control" type="number" step="any" placeholder="Amount" formControlName="amount"/>
+                        <div class="error">
+                            <span *ngIf="tokenTransferForm.get('amount').touched == true && tokenTransferForm.get('amount').errors && tokenTransferForm.get('amount').errors.required == true">Amount is required</span>
+                            <span *ngIf="tokenTransferForm.get('amount').touched == true && tokenTransferForm.get('amount').errors && tokenTransferForm.get('amount').errors.isPositive === false">Amount must be greater than zero</span>    
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gas Amount</label>
+                    <div class="form-input">
+                        <input class="form-control" type="number" step="any" placeholder="Gas Amount" formControlName="gasAmount" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Total Amount</label>
+                    <div class="form-input">
+                        <input class="form-control" type="number" step="any" placeholder="Total Amount" formControlName="totalAmount" readonly />
+                        <div class="error">
+                            <span class="token-balance">Token Balance : {{tokenBalance}} <span *ngIf="selectedToken">{{selectedToken.symbol}}</span></span>
+                            <span *ngIf="tokenTransferForm.get('totalAmount').touched == true && tokenTransferForm.get('totalAmount').errors && tokenTransferForm.get('totalAmount').errors.lessThanBalance == true">Not Sufficient Balance</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="transbutton" [disabled]="tokenTransferForm.status != 'VALID'">Send Token</button>    
+                </div>
+            </form>
+            <!-- <span class="panel-2">
+                <div class="panel2">
+                    <mat-card>
+                        <mat-card-content>
+                            <mat-tab-group class="demo-tab-group">
+                                <mat-tab label="All">
+                                    <div class="demo-tab-content">
+                                    consectetur adipiscing elit. Nulla venenatis ante augue.
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Sent">
+                                    <div class="demo-tab-content">
+                                        <table class="table tablz">
+                                            <tr>
+                                                <td>
+                                                        <span class="glyphicon glyphicon-envelope"></span>
+                                                </td>
+                                                <td> Sent 0.3349
+                                                        <span class="spcltxt">OmisGo</span></td>
+                                                <td>john@example.com</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="glyphicon glyphicon-envelope"></span></td>
+                                                <td>Sent 0.3349
+                                                        <span class="spcltxt">OmisGo</span></td>
+                                                <td>mary@example.com</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="glyphicon glyphicon-envelope"></span></td>
+                                                <td>Sent 0.3349
+                                                        <span class="spcltxt">OmisGo</span></td>
+                                                <td>july@example.com</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Received">
+                                    No content
+                                </mat-tab>
+                            </mat-tab-group>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </span> -->
+        </div>
+    </div>
+</div>

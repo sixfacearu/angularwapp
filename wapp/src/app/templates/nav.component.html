@@ -1,0 +1,120 @@
+<div class="header hidden-xs">
+    <img src="../../assets/wandxlogo.png" alt="">
+</div>
+<header class="hidden-lg hidden-md hidden-sm">
+    <nav class="navbar navbar-default navcolor navbar-fixed-top">
+        <div class="head">
+            <div class="navbar-header">
+                <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="#" class="navbar-brand"><img src="assets/wandxlogo.png" alt="" target="_blank"></a>
+
+            </div>
+            <div class="collapse navbar-collapse navcontentcolor" id="bs-example-navbar-collapse-6">
+                <ul class="nav navbar-nav" [ngClass]="switchTheme ? 'header-tabs darkTheameHeaderBlack':'header-tabs'">
+                    <li class="tablinks" [ngClass]="{'active': isTabActive('dashboard')}" routerLink="/dashboard">
+                        <img src="../../assets/dashboardInActive.png" class="img img-responsive" *ngIf="!isTabActive('dashboard') && !switchTheme">
+                        <img src="../../assets/dashboardActive.png" class="img img-responsive" *ngIf="isTabActive('dashboard') || switchTheme">
+                        <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Overview</span>
+                        <!-- <div [ngClass]="{'arrow-up': isTabActive('dashboard')}"></div> -->
+                    </li>
+                    <li class="tablinks" [ngClass]="{'active': isTabActive('portfolios')}" routerLink="/basket">
+                        <img src="../../assets/portFolioInActive.png" class="img img-responsive" *ngIf="!isTabActive('portfolios') && !switchTheme ">
+                        <img src="../../assets/portfolioActive.png" class="img img-responsive" *ngIf="isTabActive('portfolios') || switchTheme">
+                        <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Token Baskets</span>
+                        <!-- <div [ngClass]="{'arrow-up': isTabActive('portfolios')}"></div> -->
+                    </li>
+                    <!--<li class="tablinks" [ngClass]="{'active': isTabActive('tokentransfer')}" routerLink="/tokentransfer" >-->
+                        <!--<img src="../../assets/portFolioInActive.png" class="img img-responsive" *ngIf="!isTabActive('tokentransfer') && !switchTheme ">-->
+                        <!--<img src="../../assets/portfolioActive.png" class="img img-responsive" *ngIf="isTabActive('tokentransfer') || switchTheme">-->
+                        <!--<span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Token Transfer</span>-->
+                    <!--</li>-->
+                  <li class="tablinks" [ngClass]="{'active': isTabActive('OTC')}" routerLink="/OTC">
+                    <img src="../../assets/orderBookInActive.png" class="img img-responsive" *ngIf="!isTabActive('OTC') && !switchTheme">
+                    <img src="../../assets/orderBookActive.png" class="img img-responsive" *ngIf="isTabActive('OTC') || switchTheme ">
+                    <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">OTC</span>
+                    <!-- <div [ngClass]="{'arrow-up': isTabActive('portfolios')}"></div> -->
+                  </li>
+                    <li class="tablinks" [ngClass]="{'active': isTabActive('order-book')}" routerLink="/order-book">
+                        <img src="../../assets/orderBookInActive.png" class="img img-responsive" *ngIf="!isTabActive('order-book') && !switchTheme">
+                        <img src="../../assets/orderBookActive.png" class="img img-responsive" *ngIf="isTabActive('order-book') || switchTheme ">
+                        <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Exchange</span>
+                        <!-- <div [ngClass]="{'arrow-up': isTabActive('order-book')}"></div> -->
+                    </li>
+                    <li [ngClass]="switchTheme ? 'darkTheme darkTheameHeaderBlack':'darkTheme'">
+                        <img src="../../assets/Theme.png" class="img img-responsive" *ngIf="!switchTheme">
+                        <img src="../../assets/Themewhite.png" class="img img-responsive" *ngIf="switchTheme">
+                        <p>Theme</p>
+                        <!-- <ui-switch size="small" name="uiSwitch2" [(ngModel)]="switchTheme" (change)="onToggleChange()"></ui-switch> -->
+                        <div class="chartTheme">
+                            <label class="switch"><input type="checkbox" id="togBtn" [(ngModel)]="switchTheme" (change)="onToggleChange()"><div class="slider round" ></div></label>
+                        </div>
+                    </li>
+                    <li [ngClass]="switchTheme ? 'logout darkTheameHeaderBlack':'logout'">
+                        <img src="../../assets/Logout.png" class="img img-responsive" *ngIf="!switchTheme">
+                        <img src="../../assets/Logoutwhite.png" class="img img-responsive" *ngIf="switchTheme">
+                        <a (click)="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+<section class="hidden-xs">
+    <div [ngClass]="switchTheme ? 'userName darkTheameHeaderBlack':'userName'">
+        <img src="../../assets/user.png" alt="" style="cursor:pointer;" (click)="showUserPrefDropdown($event)">
+        <p (click)="showUserPrefDropdown($event)" matTooltip="{{getLogoutText()}}" [matTooltipPosition]="'below'" style="cursor:pointer;">{{getLogoutText()}}</p>
+    </div>
+    <ul [ngClass]="switchTheme ? 'header-tabs darkTheameHeaderBlack':'header-tabs'">
+        <li class="tablinks" [ngClass]="{'active': isTabActive('dashboard')}" routerLink="/dashboard">
+            <img src="../../assets/dashboardInActive.png" class="img img-responsive" *ngIf="!isTabActive('dashboard') && !switchTheme">
+            <img src="../../assets/dashboardActive.png" class="img img-responsive" *ngIf="isTabActive('dashboard') || switchTheme">
+            <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Overview</span>
+            <!-- <div [ngClass]="{'arrow-up': isTabActive('dashboard')}"></div> -->
+        </li>
+        <li class="tablinks" [ngClass]="{'active': isTabActive('portfolios')}" routerLink="/basket">
+            <img src="../../assets/portFolioInActive.png" class="img img-responsive" *ngIf="!isTabActive('portfolios') && !switchTheme ">
+            <img src="../../assets/portfolioActive.png" class="img img-responsive" *ngIf="isTabActive('portfolios') || switchTheme">
+            <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Token Baskets</span>
+            <!-- <div [ngClass]="{'arrow-up': isTabActive('portfolios')}"></div> -->
+        </li>
+        <!--<li class="tablinks" [ngClass]="{'active': isTabActive('tokentransfer')}" routerLink="/tokentransfer">-->
+            <!--<img src="../../assets/portFolioInActive.png" class="img img-responsive" *ngIf="!isTabActive('tokentransfer') && !switchTheme ">-->
+            <!--<img src="../../assets/portfolioActive.png" class="img img-responsive" *ngIf="isTabActive('tokentransfer') || switchTheme">-->
+            <!--<span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Token Transfer</span>-->
+        <!--</li>-->
+        <li class="tablinks" [ngClass]="{'active': isTabActive('OTC')}" routerLink="/OTC">
+        <img src="../../assets/orderBookInActive.png" class="img img-responsive" *ngIf="!isTabActive('OTC') && !switchTheme">
+        <img src="../../assets/orderBookActive.png" class="img img-responsive" *ngIf="isTabActive('OTC') || switchTheme ">
+        <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">OTC</span>
+        <!-- <div [ngClass]="{'arrow-up': isTabActive('portfolios')}"></div> -->
+      </li>
+        <li class="tablinks" [ngClass]="{'active': isTabActive('order-book')}" routerLink="/order-book">
+            <img src="../../assets/orderBookInActive.png" class="img img-responsive" *ngIf="!isTabActive('order-book') && !switchTheme">
+            <img src="../../assets/orderBookActive.png" class="img img-responsive" *ngIf="isTabActive('order-book') || switchTheme ">
+            <span [ngClass]="switchTheme ? ' darkTheameHeadingTextColor':''">Exchange</span>
+            <!-- <div [ngClass]="{'arrow-up': isTabActive('order-book')}"></div> -->
+        </li>
+
+    </ul>
+    <div [ngClass]="switchTheme ? 'darkTheme darkTheameHeaderBlack':'darkTheme'">
+        <img src="../../assets/Theme.png" class="img img-responsive" *ngIf="!switchTheme">
+        <img src="../../assets/Themewhite.png" class="img img-responsive" *ngIf="switchTheme">
+        <p>Theme</p>
+        <!-- <ui-switch size="small" name="uiSwitch2" [(ngModel)]="switchTheme" (change)="onToggleChange()"></ui-switch> -->
+        <div class="chartTheme">
+
+            <label class="switch"><input type="checkbox" id="togBtn" [(ngModel)]="switchTheme" (change)="onToggleChange()"><div class="slider round" ></div></label>
+        </div>
+    </div>
+    <div [ngClass]="switchTheme ? 'logout darkTheameHeaderBlack':'logout'">
+        <img src="../../assets/Logout.png" class="img img-responsive" *ngIf="!switchTheme">
+        <img src="../../assets/Logoutwhite.png" class="img img-responsive" *ngIf="switchTheme">
+        <a (click)="logout()">Logout</a>
+    </div>
+</section>

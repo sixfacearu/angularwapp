@@ -1,0 +1,90 @@
+<div class="otc" [ngClass]="switchThemeService.switchTheme ? 'otcdark':''">
+  <p class="head">OTC</p>
+  <div class="row" style="margin-left: 20px;margin-right: 20px">
+    <a class="pull-left" routerLink="/basket/createBashket">*Buy: Buy orders can be placed here</a>
+    <div class="pull-right">
+    <input type="text" name="search" class="form-control" style=" border-radius: 0px!important;" [(ngModel)]="searchToken" (input)="filter(searchToken)"/>
+    </div>
+    <br/>
+    <div class="loader-portfolio" *ngIf="showLoader">
+      <div class="loader">
+        <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+      </div>
+    </div>
+    <table class="table table-responsive table-bordered" *ngIf="!showLoader" style=" margin-top: 22px;">
+      <tr>
+        <th  class="text-center" style="width: 30%;">Token Name</th>
+        <th class="text-center">Symbol</th>
+        <th class="text-center"></th>
+      </tr>
+      <tr *ngFor="let tokens of allAvailableContract">
+        <td class="text-center">{{tokens.name}}</td>
+        <td class="text-center">{{tokens.symbol}}</td>
+        <td class="text-center">
+          <button  class="ctmbtm" (click)="openBuyorderModal(tokens)">Find Seller</button>
+        </td>
+      </tr>
+    </table>
+    <div *ngIf="allAvailableContracts" >
+      <div class="row">
+        <div class="introWidh"></div>
+        <div class="introWidh">
+          <div class="cards">
+            <p>1.A sell order is a smart contract that contains the underlying Token.</p>
+          </div>
+        </div>
+        <div class="introWidh">
+          <div class="cards">
+            <p>2. When the sell order executes, the ownership of the smart contract is transferred to your ledger or Metamask account.</p>
+          </div>
+        </div>
+        <div class="introWidh">
+          <div class="cards">
+            <p >3. You can obtain the underlying Token by <span style="cursor: pointer;color: blue;text-decoration: underline;" routerLink="/basket/sell">liquidating</span> it.</p>
+          </div>
+        </div>
+        <div class="introWidh"></div>
+        <p style="margin-top: 7px;
+    color: #0f9e0f;
+    font-style: italic;">*Every Token Basket is a smart contract. Ownership of the smart contract is transferred when a trade occurs. This is entirely decentralized, and WandX holds no code but the front-end to enable this creation and trade of Token Baskets.</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="buyOrder">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md" role="document" style="width: 70%;">
+        <div  [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' " class="modal-content ">
+          <div class="modal-header">
+            <i class="fa fa-times" (click)="closeBuyorderModal()" style="position: absolute;cursor: pointer;z-index: 999;right: 15px;top: 14px;font-size: 21px;"></i>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="filteredSeller.length>0">
+              <table class="table table-responsive ">
+                <tr>
+                  <th>Contract Address</th>
+                  <th>Token</th>
+                  <th>No of Token</th>
+                  <th>Asking Price</th>
+                  <th>Price ({{selectedToken.tokenSymbol}})</th>
+                  <th></th>
+                </tr>
+                <tr *ngFor="let seller of filteredSeller">
+                  <td>{{seller.contractAddress}}</td>
+                  <td>{{seller.tokens[0].symbol}}</td>
+                  <td>{{seller.tokens[0].value}}</td>
+                  <td>{{seller.valueInEther}} ETH</td>
+                  <td>{{getvalue(seller.tokens[0].value,seller.valueInEther) | number:'1.0-4'}} ETH</td>
+                  <td><button class="ctmbtm" (click)="selectSeller(seller)">Buy</button></td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="filteredSeller.length===0" style="padding: 20px">
+              <h2 style="text-align: center;">No seller found</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+</div>

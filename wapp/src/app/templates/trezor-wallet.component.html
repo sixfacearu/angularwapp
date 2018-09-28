@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >   
+	<div class="form-group file-input">
+		<file-drop (onFileDrop)="dropped($event)" customstyle="dropzone">
+			<label for="jsonfile">
+				<span *ngIf="form.get('jsonfile').invalid"><i class="fa fa-upload" aria-hidden="true"></i> Drop JSON Wallet File Here</span>
+				<span *ngIf="form.get('jsonfile').valid">{{filename}}</span>
+			</label>
+    </file-drop>
+		<input type="file" id="jsonfile" class="form-control" #fileInput (change)="onJSONFileChanged($event)">
+		<span class="file-error" *ngIf="form.get('jsonfile').dirty == true && form.get('jsonfile').errors && form.get('jsonfile').errors.required == true">Valid JSON file required</span>
+		<span class="file-error" *ngIf="form.get('jsonfile').dirty == true && form.get('jsonfile').errors && form.get('jsonfile').errors.invalidJson == true">Not a valid JSON file</span>
+		<span class="file-error" *ngIf="form.get('jsonfile').dirty == true && form.get('jsonfile').errors && form.get('jsonfile').errors.directory == true">Please drop a valid JSON Wallet file</span>
+	</div>
+	<div class="form-group">
+		<input class="form-control" type="password" placeholder="Wallet Password" formControlName="password">
+		<span class="error" *ngIf="form.get('password').dirty == true && form.get('password').errors && form.get('password').errors.required == true">Password is required</span>
+	</div>
+	<div class="button-row">
+		<span class="error" *ngIf="form.dirty == true && form.errors && form.errors.passwordInvalid == true">Key derivation failed - possibly wrong passphrase</span><br>
+		<button  mat-raised-button color="sucs" type="submit">Submit</button>
+	</div>
+</form>

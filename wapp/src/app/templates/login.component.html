@@ -1,0 +1,189 @@
+<div id="login">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="head">
+        <div class="navbar-header">
+          <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" class="navbar-brand"><img src="assets/wandxlogo.png" alt="" target="_blank"></a>
+
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href=" https://wandx.co" target="_blank">
+                <p>About</p>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/WandXDapp" target="_blank">
+                <p>Smart Contracts</p>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://www.wandx.co/whitepaper.html" target="_blank">
+                <p>Whitepaper</p>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.gitbook.com/@wandxdapp">
+                <p>How to use WandX</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+  <div class="loginBody">
+    <div class="row mar0">
+      <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  brdrRight">
+        <div class="leftData">
+          <div class="heading">
+            <h2>Smart Crypto-finstrument trading</h2>
+          </div>
+          <div class="middleImage">
+            <!-- <img _ngcontent-c5="" alt="" src="assets/login.png"> -->
+            <p>Decentralized exchange for ERC20 Tokens.</p>
+            <p>Basket Protocol to create and trade in baskets of ERC20 Tokens.</p>
+            <p>Listing new Tokens within 48 hours.</p>
+          </div>
+          <label>PrivateKey</label>
+          <div class="startedd">
+            <input type="text" class="form-control" #a (input)="length(a.value)"  style="max-width: 300px;display: inline;" placeholder="PrivateKey"required>
+          </div>
+
+          <div class="started" >
+            <button color="sucs" id="lo" hidden='true' type="submit"  class="address-btn" (click)="privatekey(a.value)"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </div>
+
+          <!-- <div class="buttons" *ngIf="!enterWandx">
+            <div class="login-button" (click)="showLedgerWalletDialog()">
+              <span>Use Ledger</span>
+              <span></span>
+            </div>
+            <div class="login-button" (click)="setWallet(2)">
+              <span>Use Metamask</span>
+            </div>
+            <div class="started">
+              <button><a target="_blank" style="text-decoration: none; color:#fff;" href="https://goo.gl/forms/ebGm5HJgK7OfJzL43">List your ERC20 Token</a> </button>
+            </div>
+          </div> -->
+
+          <div class="buttons" *ngIf="enterWandx && !selectedWallet">
+          
+
+          </div>
+          <div class="metamaskmsg" *ngIf="selectedWallet">
+            <h2 *ngIf="!checkWeb3()">Please login to metamask and refresh the page</h2>
+            <h2 *ngIf="checkWeb3() && !checkNetwork()">{{networkStatusMessage}}</h2>
+          </div>
+          <div class="disclaimer hidden-xs hidden-sm">
+            <p>Disclaimer: *Cryptocurrencies are highly volatile. Trade at your own risk.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+        <div class="rightData">
+          <div class="heading">
+            <h2>Decentralised trading of ERC20 tokens and ERC20 token baskets</h2>
+          </div>
+          <div class="videoData">
+            <div class="videoImg">
+              <img src="assets/laptop.png" alt="">
+              <div class="playIcon" (click)="show=!show">
+                <img width="84" height="84" src="assets/icon-play-button.svg" alt="play button">
+              </div>
+              <div class="youtube-video-holder" *ngIf="show">
+                <iframe width="342" height="215" src="https://www.youtube.com/embed/Xk6hj_A68ac?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="disclaimer hidden-lg  hidden-md">
+            <p>Disclaimer: *Cryptocurrencies are highly volatile. Trade at your own risk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="row mar0">
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs footer-col">
+          <p class="footer-title">
+            About Us
+          </p>
+          <p><a href="https://goo.gl/forms/ebGm5HJgK7OfJzL43" target="_blank">Token Listing</a></p>
+          <p><a href="https://www.wandx.co/whitepaper.html" target="_blank">White Paper</a></p>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs footer-col">
+          <p class="footer-title">
+            Legal
+          </p>
+          <p><a href="https://www.wandx.co/terms-of-use.html" target="_blank">Terms of Use</a></p>
+          <p><a href="https://www.wandx.co/privacy-policy.html" target="_blank">Privacy Policy</a></p>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs footer-col">
+          <p class="footer-title">
+            Trading
+          </p>
+          <p><a href="" matTooltip="Will be documented by Feb 26th" [matTooltipPosition]="'right'">API Documentation</a></p>
+          <p id="myBtn1" matTooltip="Using the Wand Token, you can get a 75% discount on trading fees for Portfolios and the Order Book" [matTooltipPosition]="'above'">Fees</p>
+          <!-- popup open -->
+          <div id="myModal1" class="modal" *ngIf="showModal">
+            <div class="modal-content modal-content1">
+              <div class="innerContent">
+                <p>Trading Fee</p>
+                <table cellspacing=0>
+                  <tr cellspacing=0>
+                    <th cellspacing=0 class="col3">
+                      <p>EXCHANGE FEES</p>
+                    </th>
+                    <th cellspacing=0 class="col2">
+                      <p class="pad">0.001</p>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th cellspacing=0 class="col2">
+                      <p>GAS FEE</p>
+                    </th>
+                    <th cellspacing=0 class="col4">
+                      <p class="pad">Depends on Ehtereum Blockchain Price</p>
+                    </th>
+                  </tr>
+                </table>
+                <div class="executeBtn close1">
+                  <button>OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- popup close -->
+        </div>
+        <div class="col-md-2 col-lg-3 col-sm-3 hidden-xs footer-col">
+          <p class="footer-title">
+            Contact Us
+          </p>
+          <p>marketing@wandx.co</p>
+          <p>business@wandx.co</p>
+        </div>
+        <div class="col-md-4 col-lg-3 col-sm-3 col-xs-12 footer-col">
+          <div class="social-icons">
+            <a href="https://www.facebook.com/wandx.co/" target="_blank"><img src="assets/social-facebook.svg"> </a>
+            <a href="https://twitter.com/WandXDapp" target="_blank"><img src="assets/social-twitter.svg"> </a>
+            <a href="https://github.com/WandXDapp" target="_blank"><img src="assets/social-github.svg"> </a>
+            <a href="https://medium.com/wandx" target="_blank"><img src="assets/social-medium.svg"> </a>
+            <a href="https://t.me/wandxbeta" target="_blank"><img src="assets/social-telegram.svg"> </a>
+            <a href="https://www.instagram.com/wandx.co/" target="_blank"><img src="assets/social-instagram.svg"> </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

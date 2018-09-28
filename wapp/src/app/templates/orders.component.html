@@ -1,0 +1,153 @@
+<div [ngClass]="switchThemeService.switchTheme ?'order-container-wrapper darkThemeorder-container-wrapper':'order-container-wrapper'">
+    <div class="order-tab-container wandx-container">
+        <div class="tab" (click)="setVisibleTab(0)" [ngClass]="{'active': isTabVisible(0)}" matTooltip="These are the portfolios and underlying Tokens that you've bought" [matTooltipPosition]="'after'">Bought</div>
+        <div class="tab" (click)="setVisibleTab(1)" [ngClass]="{'active': isTabVisible(1)}" matTooltip="These are the portfolios that you've sold" [matTooltipPosition]="'above'">Sold</div>
+    </div>
+    <div class="bought wandx-container" *ngIf="visibleTab === 0">
+        <div class="order-table-header">
+            <div class="order-col-1">
+                <p>Basket</p>
+            </div>
+            <div class="order-col-3">
+                <p>Seller</p>
+            </div>
+            <div class="order-col-3">
+                <p>Tx Status</p>
+            </div>
+        </div>
+        <div class="loader" *ngIf="showOrderLoader">
+            <div class="loader">
+                <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+            </div>
+        </div>
+
+        <div class="order-table-body" *ngIf="!showOrderLoader">
+            <div *ngIf="currentBoughtOrders.length === 0">
+                <div class="noData">
+                    <img src="assets/orderhistory.png" alt="">
+                    <p>No Baskets Found.</p>
+                </div>
+            </div>
+            <div class="order-table-row" *ngFor="let bought of currentBoughtOrders; let i = index">
+                <div class="order-col-1">
+                    <p style="margin-bottom:0px; line-height: 18px; font-size: 14px; font-weight: normal; height: 18px; color: #4B4B4B">{{bought['name']}}</p>
+                    <p style="height: 23px; line-height: 10px;font-size: 10px;font-weight: normal;color: #6F6F6F;">
+                        Asking price {{bought['valueInEther']}} ETH
+                    </p>
+                </div>
+                <div class="order-col-3">
+                    <p style="font-weight: 300; font-size: 14px; line-height: 29px; color: #1EBED7;">
+                        <a class="order-link" href="{{getAddressUrl()}}{{bought['owner']}}" target="_blank"> {{bought['owner']}} </a>
+                    </p>
+                </div>
+                <div class="order-col-4">
+                    <p style="font-weight: 300; font-size: 14px; line-height: 29px; color: #000000; padding-left: 27px;">
+                       Success
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sold wandx-container" *ngIf="visibleTab === 1">
+        <div class="order-table-header">
+            <div class="order-col-1">
+                <p> Basket</p>
+            </div>
+            <div class="order-col-3">
+                <p>Buyer</p>
+            </div>
+            <div class="order-col-3">
+                <p> Tx Status</p>
+            </div>
+        </div>
+        <div class="loader" *ngIf="showOrderLoader">
+            <div class="loader">
+                <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+            </div>
+        </div>
+
+        <div class="order-table-body" *ngIf="!showOrderLoader">
+            <div *ngIf="currentSoldOrders.length===0">
+                <div class="noData">
+                    <img src="assets/orderhistory.png" alt="">
+                    <p>No Baskets Found.</p>
+                </div>
+            </div>
+            <div class="order-table-row" *ngFor="let sold of currentSoldOrders; let i = index">
+                <div class="order-col-1">
+                    <p style="margin-bottom:0px; line-height: 18px; font-size: 14px; font-weight: normal; height: 18px; color: #4B4B4B">{{sold['name']}}</p>
+                    <p style="height: 23px; line-height: 10px;font-size: 10px;font-weight: normal;color: #6F6F6F;">
+                        Asking price {{sold['valueInEther']}} ETH
+                    </p>
+                </div>
+                <div class="order-col-3">
+                    <p style="font-weight: 300; font-size: 14px; line-height: 29px; color: #1EBED7;">
+                        <a class="order-link" href="{{getAddressUrl()}}{{sold['currentOwnerOrSeller']}}" target="_blank"> {{sold['currentOwnerOrSeller']}} </a>
+                    </p>
+                </div>
+                <div class="order-col-3">
+                    <p style="font-weight: 300; font-size: 14px; line-height: 29px; color: #1EBED7;">
+                        <a class="order-link" href="{{getTransactionUrl()}}{{sold.TransactionId}}" target="_blank"> {{sold.TransactionId}} </a>
+                    </p>
+                </div>
+                <div class="order-col-4">
+                    <p style="font-weight: 300; font-size: 14px; line-height: 29px; color: #000000; padding-left: 27px;">
+                        Success
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sold wandx-container" *ngIf="visibleTab === 2">
+        <div class="order-table-header">
+
+            <div class="order-col-1">
+                <p>Token Basket</p>
+            </div>
+            <div class="order-col-2">
+                <p>Tokens</p>
+            </div>
+            <div class="order-col-1">
+                <p>Quoted Price (ETH)</p>
+            </div>
+            <div class="order-col-1">
+                <p> Current Price(ETH)</p>
+            </div>
+        </div>
+        <div class="loader" *ngIf="showOrderLoader">
+            <div class="loader">
+                <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+            </div>
+        </div>
+        <div *ngIf="getQuotesOrders().length===0">
+            <div class="noData">
+                <img src="assets/orderhistory.png" alt="">
+                <p>No Baskets Found.</p>
+            </div>
+        </div>
+        <div class="order-table-body" *ngIf="!showOrderLoader">
+            <div class="order-table-row" *ngFor="let sold of getQuotesOrders(); let i = index">
+                <div class="order-col-1">
+                    <p style="color: #5d5353;font-family: Helvetica-Light; font-size: 13px;display: inline-block;margin:0">
+                        {{sold.porfolioName}}
+                    </p>
+                </div>
+                <div class="order-col-2">
+                    <p style="color: #5d5353;font-family: Helvetica-Light; font-size: 13px;display: inline-block;margin:0" *ngFor="let assest of sold.Assets;let j = index">
+                        {{assest.Reqbalance}} {{assest.Symbol}} <span *ngIf="j!==sold.Assets.length-1">+</span>
+                    </p>
+                </div>
+                <div class="order-col-1">
+                    <p matTooltip="{{sold.Value * usd | number:'1.0-4'}} USD" [matTooltipPosition]="'above'" style="color: #5d5353;font-family: Helvetica-Light; font-size: 13px;display: inline-block;margin:0">
+                        {{sold.Value | number:'1.1-4'}}
+                    </p>
+                </div>
+                <div class="order-col-1">
+                    <p matTooltip="{{sold.CurrentValuationInWand * usd | number:'1.0-4'}} USD" [matTooltipPosition]="'above'" style="color: #5d5353;font-family: Helvetica-Light; font-size: 13px;display: inline-block;margin:0">
+                        {{sold.CurrentValuationInWand | number:'1.1-4'}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+<div [ngClass]="switchThemeService.switchTheme ? 'create-container-wrapper darkTheameBoxbackground':'create-container-wrapper'">
+    <div class="create-container-header">
+        <div class="wandx-container">
+            <div class="create-header">
+                <img src="../../assets/plus.png" class="img img-responsive">
+                <p>Create New Portfolio</p>
+            </div>
+            <!-- <div class="create-button-panel">
+                    <button class="cancel-button" routerLink="/portfolio">Cancel</button>
+    
+                </div> -->
+        </div>
+    </div>
+
+    <div class="create-container wandx-container">
+        <div class="create-portfolio-form">
+            <input type="text" placeholder="Portfolio Title *" id="create-portfolio-name" [(ngModel)]="portfolioName" />
+            <!--<div class="savebtn">
+                    <button>Save</button>
+                </div>-->
+            <br>
+            <div class="multipleToken">
+                <p>Choose Token(s)</p>
+                <div class="multiselect-holder">
+                    <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" (onSelect)="OnItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)">
+                    </angular2-multiselect>
+                </div>
+            </div>
+            <div class="loader" *ngIf="showDropdownLoader">
+                <div class="loader">
+                    <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+                </div>
+            </div>
+            <div class="create-portfolio-assets" *ngIf="!showDropdownLoader && portfolio.length > 0">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="tokenHeadings">
+                            <p>Elements</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="tokenHeadings">
+                            <p>Available Tokens* </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="tokenHeadings text-center">
+                            <p>Quantity</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-asset-row" title="{{asset.Title}}" *ngFor="let asset of portfolio; let i = index">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-4 col-xs-4">
+                            <div class="tokenHeadings">
+                                <span>{{asset.CoinName}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-4">
+                            <div class="tokenHeadings">
+                                <span>{{asset.Available}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="tokenHeadings text-center">
+                                <input type="number" class="create-portfolio-number-input" [(ngModel)]="portfolio[i].Reqbalance" (input)="trackTokenvalue(asset)" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="create-portfolio-buttons" *ngIf="portfolio.length > 0">
+                <div>
+                    <button class="analyze-button" [disabled]="!isPortfolioValid()" (click)="analyzePortfolio()">Analyze</button>
+                </div>
+                <div class="left-buttons" *ngIf="!showAnalysisLoader && assetAnalysisResult.assets && assetAnalysisResult.assets.length > 0">
+                    <label class="create-portfolio-form-label">Asking price (in ETH)</label>
+                    <br/>
+                    <input type="number" class="create-portfolio-input " [(ngModel)]="askingPriceInWand" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="availbility">
+                    <p>*Available tokens</p>
+                    <p>Number of tokens in balance or authorized (whichever is less) - Number of tokens used in other portfolios</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="portfolio-analysis">
+            <div class="noData" *ngIf="!assetAnalysisResult.assets">
+                <img src="assets/create-portfilio.png" alt="">
+                <p>Created token basket will be shown here</p>
+            </div>
+            <div class="loader" *ngIf="showAnalysisLoader">
+                <div class="loader">
+                    <img class="img img-responsive" src="assets/wandex-loading.png" alt="" style="width:100px;margin-left:45%;margin-top:40px;">
+                </div>
+            </div>
+            <div class="analysis-result" *ngIf="!showAnalysisLoader && assetAnalysisResult.assets && assetAnalysisResult.assets.length > 0">
+                <div class="portfolioAnalysis">
+                    <div class="portfolioHeading">
+                        <p>Portfolio Analysis</p>
+                    </div>
+                    <div class="graph">
+                        <div class="row mar0">
+                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                <div class="charts">
+                                    <div id="piechartdiv" [style.width.%]="100" [style.height.px]="200"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="graphAssetData">
+                                    <div class="assetValue" *ngFor="let asset of assetAnalysisResult.assets">
+                                        <h3>{{asset.coin}}</h3>
+                                        <p>{{asset.reqbalance}} tokens</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-header">
+                    <div class="col col-1">Product/Coin</div>
+                    <div class="col col-2">Quantity</div>
+                    <div class="col col-3">ETH</div>
+                    <div class="col col-4">USD</div>
+                    <div class="col col-5">WAND</div>
+                </div>
+                <div class="createdPortfolio">
+                    <div class="table-row" *ngFor="let asset of assetAnalysisResult.assets">
+                        <div class="col col-1">{{asset.coin}}</div>
+                        <div class="col col-2">{{asset.reqbalance}}</div>
+                        <div class="col col-3">{{asset.summary.ETH | number:'1.0-6'}}</div>
+                        <div class="col col-4">{{asset.summary.USD | number:'1.0-4'}}</div>
+                        <div class="col col-5">{{asset.summary.WAND | number:'1.0-4'}}</div>
+                    </div>
+                </div>
+                <div class="totalValue">
+                    <div class="table-row">
+                        <div class="col col-1">Total</div>
+                        <div class="col col-2">{{totalQuanity}}</div>
+                        <div class="col col-3">{{assetAnalysisResult.overall.ETH | number:'1.0-6'}}</div>
+                        <div class="col col-4">{{ assetAnalysisResult.overall.USD | number:'1.0-4'}}</div>
+                        <div class="col col-5">{{assetAnalysisResult.overall.WAND | number:'1.0-4'}}</div>
+                    </div>
+                </div>
+                <div class="askingPrice">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <div class="name">
+                                <p>Asking Price</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-sm-6 col-xs-6">
+                            <div class="value">
+                                <p>{{askingPriceInWand | number:'1.0-6'}} ETH</p>
+                                <p>{{askingPriceInWand * usd | number:'1.1-4'}} USD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signPublish">
+                    <button class="sign-publish-portfolio-button" [disabled]="!enablePublish()" (click)="signAndPublishPortfolio()">Sign & Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

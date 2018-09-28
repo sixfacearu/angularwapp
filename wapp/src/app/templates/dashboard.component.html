@@ -1,0 +1,200 @@
+<div class="dasboardPage">
+    <div [ngClass]="switchThemeService.switchTheme ? 'dashboard darkThemedashboard':'dashboard'">
+        <div class="graphData">
+            <div class="timeDetail">
+                <div class="inputValue">
+                    <select class="input_field" (change)="onSelect($event.target.value)" [(ngModel)]="selectedSourceTokenSymbol" style="width: 230px;">
+                          <option value="{{token.symbol}}" *ngFor="let token of sourceTokens">{{token.name}} ({{token.symbol}})</option>
+                        </select>
+                </div>
+                <div class="btnTab">
+                    <button [ngClass]="{'active': tracKGraph=='line'}" (click)="changeChart('line')">Line Graph</button>
+                    <button class="rightBtn" [ngClass]="{'active': tracKGraph=='candle'}" (click)="changeChart('candle')">Candle Graph</button>
+                </div>
+                <div class="selectTime">
+                    <button [ngClass]="{'active': activeBtn=='M'}" (click)="getMinData()">1m</button>
+                    <button [ngClass]="{'active': activeBtn=='H'}" (click)="getDayData()">1h</button>
+                    <button [ngClass]="{'active': activeBtn=='D'}" (click)="getHoursData()">1d</button>
+                </div>
+            </div>
+            <div class="priceDetail">
+                <div class="priceValue">
+                    <div class="ethPrice">
+                        <p>{{currentPrice}} ETH</p>
+                        <span>PRICE IN ETH</span>
+                    </div>
+                    <div class="usdPrice brdrleft">
+                        <p>{{currentPrice * usd | number:'1.1-4'}} USD</p>
+                        <span>PRICE IN USD</span>
+                    </div>
+                </div>
+                <div class="priceValue brdrleft">
+                    <div class="ethPrice">
+                        <p>{{highPrice}} ETH</p>
+                        <span>HIGH</span>
+                    </div>
+                    <div class="usdPrice brdrleft">
+                        <p>{{highPrice * usd | number:'1.1-4'}} USD</p>
+                        <span>HIGH</span>
+                    </div>
+                </div>
+                <div class="priceValue brdrleft">
+                    <div class="ethPrice">
+                        <p>{{lowPrice}} ETH </p>
+                        <span>LOW</span>
+                    </div>
+                    <div class="usdPrice brdrleft">
+                        <p>{{lowPrice * usd | number:'1.1-4'}} USD</p>
+                        <span>LOW</span>
+                    </div>
+                </div>
+            </div>
+            <div class="graphStats">
+                <charts *ngIf="tracKGraph==='line'"></charts>
+                <dchart *ngIf="tracKGraph!='line'"></dchart>
+            </div>
+        </div>
+        <div class="metamask">
+            <div class="walletData">
+                <h2>Metamask Balance</h2>
+                <div class="walletContent">
+                    <wallet></wallet>
+                </div>
+            </div>
+            <div class="tokenData">
+                <h2 class="inlineData">Token Balance</h2>
+                <div class="chartTheme">
+                    <label class="switch"><input type="checkbox" id="togBtn" [(ngModel)]="changeGraphData" (click)="onToggleChange()"><div class="slider round" ></div></label>
+                </div>
+                <div class="walletContentvalue">
+                    <table class="table table-borderd">
+                        <tr>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <th>Tokens</th>
+                                    <th>Current Price(ETH)</th>
+                                    <th class="hidden-xs">Current Price(USD)</th>
+                                    <th class="hidden-xs">24H Volume</th>
+                                    <th>24H high</th>
+                                    <th>24H low</th>
+                                    <!-- <th>Marketcap</th>
+                                    <th>Change 24H</th> -->
+                                </tr>
+                            </table>
+                        </tr>
+                        <tr>
+                            <table style="width: 100%;max-height: 200px;overflow-y: auto;">
+                                <tr *ngFor="let token of tokenList">
+                                    <td>{{token.FROMSYMBOL}}</td>
+                                    <td>{{token.PRICE | number:'1.1-4'}}</td>
+                                    <td class="hidden-xs">{{token.PRICE * usd | number:'1.1-4'}}</td>
+                                    <td class="hidden-xs">{{token.VOLUME24HOUR | number:'1.1-4'}}</td>
+                                    <td>{{token.HIGH24HOUR | number:'1.1-4'}}</td>
+                                    <td>{{token.LOW24HOUR | number:'1.1-4'}}</td>
+                                    <!-- <td>{{token.MKTCAP | number:'1.1-4'}}</td>
+                                    <td>{{token.CHANGE24HOUR | number:'1.1-4'}}</td> -->
+                                </tr>
+                            </table>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--<div class="orderbookReport">-->
+                <!--<h2> Order Book Report</h2>-->
+                <!--<div class="orderBookReport">-->
+                    <!--<div class="buy">-->
+                        <!--<div class="order">-->
+                            <!--<h3>Buy Order</h3>-->
+                        <!--</div>-->
+                        <!--<div class="table">-->
+                            <!--<div class="tablevalues heading">-->
+                                <!--<div class="quantity">-->
+                                    <!--<p>Quantity</p>-->
+                                <!--</div>-->
+                                <!--<div class="price">-->
+                                    <!--<p>Price</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="tablevalues" *ngIf="!userOrders || !userOrders.BuyOrders || userOrders.BuyOrders.length === 0">-->
+                                <!--<p>No Active Buy Orders</p>-->
+                            <!--</div>-->
+                            <!--<div class="tablevalues" *ngFor="let order of userOrders.BuyOrders">-->
+                                <!--<div class="quantity">-->
+                                    <!--<p>{{order.BuyingVolume}}</p>-->
+                                <!--</div>-->
+                                <!--<div class="price">-->
+                                    <!--<p>{{order.BuyingVolume * order.TargetVolume}} {{order.TargetToken.symbol}}</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="sell">-->
+                        <!--<div class="order">-->
+                            <!--<h3>Sell Order</h3>-->
+                        <!--</div>-->
+                        <!--<div class="table">-->
+                            <!--<div class="tablevalues heading">-->
+                                <!--<div class="quantity">-->
+                                    <!--<p>Quantity</p>-->
+                                <!--</div>-->
+                                <!--<div class="price">-->
+                                    <!--<p>Price</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="tablevalues" *ngIf="!userOrders || !userOrders.SellOrders || userOrders.SellOrders.length === 0">-->
+                                <!--<p>No Active Sell Orders</p>-->
+                            <!--</div>-->
+                            <!--<div class="tablevalues" *ngFor="let order of userOrders.SellOrders">-->
+                                <!--<div class="quantity">-->
+                                    <!--<p>{{order.SellingVolume}}</p>-->
+                                <!--</div>-->
+                                <!--<div class="price">-->
+                                    <!--<p>{{order.SellingVolume * order.TargetVolume}} {{order.TargetToken.symbol}}</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="token">-->
+                    <!--<h3>Token Details</h3>-->
+                    <!--<div class="tokenDetail">-->
+                        <!--<div class="tokenName heading">-->
+                            <!--<p>Name</p>-->
+                        <!--</div>-->
+                        <!--<div class="tokenValue heading">-->
+                            <!--<p>Value</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div *ngIf="trackTokenZero===tokenDetails.length">-->
+                        <!--<div class="noData">-->
+                            <!--<img src="assets/orderhistory.png" alt="">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div *ngIf="trackTokenZero!==tokenDetails.length">-->
+                        <!--<div class="tokenDetail" *ngFor="let data of tokenDetails">-->
+                            <!--<div *ngIf="data.value > 0">-->
+                                <!--<div class="tokenName">-->
+                                    <!--<p>{{data.symbol}}</p>-->
+                                <!--</div>-->
+                                <!--<div class="tokenValue ">-->
+                                    <!--<p>{{data.value}}</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="portfolioReport">-->
+                <!--<h2> Portfolio Report</h2>-->
+                <!--<div class="walletContentvalue">-->
+                    <!--<div class="orderContent">-->
+                        <!--<orders></orders>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <footer></footer>
+
+
+</div>
